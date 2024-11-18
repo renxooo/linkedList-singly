@@ -150,7 +150,7 @@ int main() {
     return 0;
 }
 
-int uiIfEmpty() {
+int uiIfEmpty() {                                               // MENU IF LIST IS EMPTY
     printf("\nWelcome!\n");
     printf("List is currently empty...\n");
     printf("\nWhat would you like to do?\n");
@@ -170,7 +170,7 @@ int uiIfEmpty() {
     return choice;
 }
 
-int uiIfNotEmpty() {
+int uiIfNotEmpty() {                                            // MENU IF LIST IS NOT EMPTY
     printf("What would you like to do?\n");
     printf("1. Add a New Node\n");
     printf("2. Delete a Node\n");
