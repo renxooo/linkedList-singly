@@ -228,7 +228,15 @@ void deleteNode(Node **head, int position) {
     else {
         Node *current = *head;
         for (int i = 1; i < (position - 1); i++) {
+            if (current == NULL) {
+                printf("Invalid position! Node does not exist.\n");
+                return;
+            }
             current = current->next;
+        }
+        if (current->next == NULL) {
+            printf("Invalid position! Node does not exist.\n");
+            return;
         }
         Node *temp = current->next;
         current->next = current->next->next;
