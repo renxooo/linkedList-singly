@@ -1,7 +1,7 @@
 // ===========================================
 // SINGLY LINKED LIST
 // TABLANTE, MIGUEL LORENZO F.
-// NATIONAL UNIVERSITY - 2024
+// 2024
 // ===========================================
 
 #include <stdio.h>
