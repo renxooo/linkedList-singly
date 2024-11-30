@@ -19,11 +19,12 @@ Node* createNode(int data);                                     // RETURNS NEW N
 void appendNode(Node **head, int data);                         // APPENDS CREATED NODE TO LIST
 void printList(Node *head);                                     // PRINT CURRENT LIST
 void deleteNode(Node **head, int position);                     // DELETES NODE
+void insertNode(Node** head, int position, int data);
 
 int main() {
     Node *head = NULL;                                          // START WITH LIST EMPTY
     bool exit = false;
-    int data, check;
+    int data, check, pos;
 
     do {                                                        
         if (head == NULL) {                                     // DO IF LIST IS EMPTY
@@ -35,7 +36,6 @@ int main() {
                     do {
                         check = scanf("%d", &data);
                         if (check != 1) {
-                            while (getchar() != '\n');          // CLEAR INPUT BUFFER
                             printf("Invalid input! Please try again.\n");
                             printf("-> ");
                         }
@@ -110,16 +110,16 @@ int main() {
                     printList(head);                            
                     printf("Enter node to delete: ");           // IF USER WANTS TO DELETE NODE
                     do {
-                        check = scanf("%d", &data);
-                        if (check != 1 || data <= 0) {
+                        check = scanf("%d", &pos);
+                        if (check != 1 || pos <= 0) {
                             while (getchar() != '\n');          // CLEAR INPUT BUFFER
                             printf("Invalid input! Please try again.\n");
                             printf("-> ");
                         }
                         else {
-                            deleteNode(&head, data);            // DELETE NODE AFTER VALID INPUT
+                            deleteNode(&head, pos);            // DELETE NODE AFTER VALID INPUT
                         }
-                    } while (check != 1 || data <= 0);          // =======================================
+                    } while (check != 1 || pos <= 0);          // =======================================
                     printf("\nWould you like to continue?\n");  // ASK IF USER WANTS TO CONTINUE
                     printf("1. Yes\n");
                     printf("2. No\n");
@@ -140,6 +140,47 @@ int main() {
                         break;
                     }                                           // =======================================
                 case 3:
+                    printf("Enter number to add: ");
+                    do {
+                        check = scanf("%d", &data);
+                        if (check != 1) {
+                            while (getchar() != '\n');          // CLEAR INPUT BUFFER
+                            printf("Invalid input! Please try again.\n");
+                            printf("-> ");
+                        }
+                    } while (check != 1);                       // ---------------------------------------
+                    printf("Enter position to insert: ");       // ASK FOR INSERT POSITION OF NEW NODE
+                    do {
+                        check = scanf("%d", &pos);
+                        if (check != 1 || pos <= 0) {
+                            while (getchar() != '\n');          // CLEAR INPUT BUFFER
+                            printf("Invalid input! Please try again.\n");
+                            printf("-> ");
+                        }
+                        else {
+                            insertNode(&head, pos, data);      // INSERT NEW NODE AFTER VALID INPUT
+                        }
+                    } while (check != 1 || pos <= 0);          // =======================================
+                    printf("\nWould you like to continue?\n"); // ASK IF USER WANTS TO CONTINUE
+                    printf("1. Yes\n");
+                    printf("2. No\n");
+                    printf("-> ");
+                    do {
+                        check = scanf("%d", &ask);
+                        if (check != 1) {
+                            while (getchar() != '\n');
+                            printf("Invalid input! Please try again.\n");
+                            printf("-> ");
+                        }
+                    } while (check != 1);
+                    if (ask == 1) {
+                        break;                                  // CONTINUE (1)
+                    }
+                    else {
+                        exit = true;                            // IF USER WANTS TO EXIT (2)
+                        break;
+                    }                                           // =======================================
+                case 4:
                     exit = true;
                     break;
             }
@@ -174,7 +215,8 @@ int uiIfNotEmpty() {                                            // MENU IF LIST 
     printf("What would you like to do?\n");
     printf("1. Add a New Node\n");
     printf("2. Delete a Node\n");
-    printf("3. Exit\n");
+    printf("3. Insert new node\n");
+    printf("4. Exit\n");
 
     short int choice;
     printf("-> ");
@@ -241,5 +283,25 @@ void deleteNode(Node **head, int position) {
         Node *temp = current->next;
         current->next = current->next->next;
         free(temp);
+    }
+}
+
+void insertNode(Node** head, int position, int data) {
+    if (position == 1) {
+        Node *newHead = createNode(data);
+        *head = newHead;
+    }
+    else {
+        Node *current = *head;
+        for (int i = 1; i < (position - 1); i++) {
+            if (current == NULL) {
+                printf("Invalid position! Node does not exist.\n");
+                return;
+            }
+            current = current->next;
+        }
+        Node *newNode = createNode(data);
+        newNode->next = current->next;
+        current->next = newNode;
     }
 }
